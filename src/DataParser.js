@@ -8,7 +8,14 @@ module.exports = function(raw_data) {
 //     ...
 //   },
 //   temperature_hisotry = {
-//     ???
-//     date = temperature
+//     [0] = {
+//       date = {
+//         date = "11 Oct 1989",
+//         time = "7:22",
+//         deduced_seconds_elapsed = ##,
+//       }, 
+//       temperature = ##
+//     },
+//     ...
 //   }
 // }
