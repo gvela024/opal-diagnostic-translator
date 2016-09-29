@@ -10,5 +10,8 @@
   "license": "MIT",
   "devDependencies": {
     "jasmine": "^2.5.2"
+  },
+  "jshintConfig": {
+    "esversion": 6
   }
 }

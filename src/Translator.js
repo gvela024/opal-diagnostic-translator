@@ -4,4 +4,4 @@ module.exports = function(print_function, data_object) {
 // Add a descriptor
 // Append to whole string
 // Print the whole string
-}
+};

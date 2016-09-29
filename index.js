@@ -1,3 +1,3 @@
-var test = require('./src/DataParser')
+var test = require('./src/DataParser');
 
 test();
