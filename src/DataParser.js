@@ -33,7 +33,7 @@ module.exports = function(raw_data) {
             date: temperature_entries[history_index].match(/[A-Za-z]{3}\s\d{1,2},\s\d{4}/g)[0],
             time: temperature_entries[history_index].match(/\d{1,2}:\d{1,2}\s[A-Z]{2}/g)[0]
           },
-          temperature: parseInt(temperature_entries[history_index].match(temperature_format)[0].slice(-2))
+          temperature: parseInt(temperature_entries[history_index].match(/\d{1,2}$/)[0])
         };
       }
     }
