@@ -15,20 +15,23 @@ var components = [
   'Bucket Switch',
 ]
 
-module.exports = function(output) {
+module.exports = function() {
   return {
-    translate: function(diagnosticsData) {
+    translateToObject: function(diagnosticsData) {
       var context = {
-        result: '',
+        result: {
+          diagnostics: {}
+        },
+        temporaryEntry: {}
       };
 
       for (diagnosticEntryIndex = 0; diagnosticEntryIndex < Object.keys(diagnosticsData.diagnosticEntries).length; diagnosticEntryIndex++) {
-        context.result += 'Entry ' + diagnosticEntryIndex + '\n';
         context.entry = diagnosticsData.diagnosticEntries[diagnosticEntryIndex];
         components.forEach(component, context);
-        context.result += '\n'
+        context.result.diagnostics[diagnosticEntryIndex] = context.temporaryEntry;
       }
-      output.print(context.result);
+
+      return context.result;
     }
   }
 }
@@ -36,10 +39,12 @@ module.exports = function(output) {
 function component(element, index, array) {
   var resultingData = ''
 
-  var diagnostic_entry = this.entry.slice(index * 12, (index + 1) * 12);
-  var seconds = convertFromLittleEndianStringToSeconds(diagnostic_entry);
-  var hoursMinutesSeconds = getHoursMinutesSeconds(seconds);
-  this.result += element + ': ' + hoursMinutesSeconds;
+  var diagnosticEntry = this.entry.slice(index * 12, (index + 1) * 12);
+  var seconds = convertFromLittleEndianStringToSeconds(diagnosticEntry);
+  this.temporaryEntry[element] = {}
+  this.temporaryEntry[element].hours = getHours(seconds);
+  this.temporaryEntry[element].minutes = getMinutes(seconds);
+  this.temporaryEntry[element].seconds = getSeconds(seconds);
 }
 
 function convertFromLittleEndianStringToSeconds(dataString) {

@@ -1,45 +1,94 @@
 var Translator = require('../src/Translator')
 
 describe('Translator', function() {
-  var outputMock;
-
-  beforeEach(function() {
-    outputMock = {
-      print: function() {}
-    };
-
-    spyOn(outputMock, 'print');
-  })
-
-  it('should convert one diagnostics data entry to something that is human readable', function() {
+  it('should convert one diagnostics data entry to JSON', function() {
     var diagnosticsData = {
       diagnosticEntries: {
         0: 'C7,04,00,00,EB,27,00,00,49,2A,00,00,7E,2B,00,00,F0,46,00,00,F8,28,00,00,6A,29,00,00,61,0D,00,00,49,2A,00,00,47,71,00,00,4A,71,00,00,47,71,00,00,43,1C,00,00,B5,02,00,00,'
       }
     };
 
-    var translator = Translator(outputMock);
-    translator.translate(diagnosticsData);
+    var translator = Translator();
+    var actual = translator.translateToObject(diagnosticsData);
 
-    var expected = '' +
-      'Entry 0\n' +
-      'Pump: 0h 20m 23s\n' +
-      'Compressor: 2h 50m 19s\n' +
-      'Fan: 3h 0m 25s\n' +
-      'Motor: 3h 5m 34s\n' +
-      'IR Sender: 5h 2m 40s\n' +
-      'IR Receiver: 2h 54m 48s\n' +
-      'Upper Switch: 2h 56m 42s\n' +
-      'Lower Switch: 0h 57m 5s\n' +
-      'UV LED: 3h 0m 25s\n' +
-      'LED Light: 8h 3m 19s\n' +
-      'LED Ring: 8h 3m 22s\n' +
-      'LED Daytime: 8h 3m 19s\n' +
-      'Clean Switch: 2h 0m 35s\n' +
-      'Bucket Switch: 0h 11m 33s\n' +
-      '\n';
+    var expected = {
+      diagnostics: {
+        0: {
+          Pump: {
+            hours: 0,
+            minutes: 20,
+            seconds: 23
+          },
+          Compressor: {
+            hours: 2,
+            minutes: 50,
+            seconds: 19
+          },
+          Fan: {
+            hours: 3,
+            minutes: 0,
+            seconds: 25
+          },
+          Motor: {
+            hours: 3,
+            minutes: 5,
+            seconds: 34
+          },
+          'IR Sender': {
+            hours: 5,
+            minutes: 2,
+            seconds: 40
+          },
+          'IR Receiver': {
+            hours: 2,
+            minutes: 54,
+            seconds: 48
+          },
+          'Upper Switch': {
+            hours: 2,
+            minutes: 56,
+            seconds: 42
+          },
+          'Lower Switch': {
+            hours: 0,
+            minutes: 57,
+            seconds: 5
+          },
+          'UV LED': {
+            hours: 3,
+            minutes: 0,
+            seconds: 25
+          },
+          'LED Light': {
+            hours: 8,
+            minutes: 3,
+            seconds: 19
+          },
+          'LED Ring': {
+            hours: 8,
+            minutes: 3,
+            seconds: 22
+          },
+          'LED Daytime': {
+            hours: 8,
+            minutes: 3,
+            seconds: 19
+          },
+          'Clean Switch': {
+            hours: 2,
+            minutes: 0,
+            seconds: 35
+          },
+          'Bucket Switch': {
+            hours: 0,
+            minutes: 11,
+            seconds: 33
+          }
+        }
+      }
+    };
 
-    expect(outputMock.print).toHaveBeenCalledWith(expected);
+    expect(actual).toEqual(expected);
   });
 
   it('should convert multiple diagnostics data entries to something human readable', function() {
@@ -51,63 +100,243 @@ describe('Translator', function() {
       }
     };
 
-    var translator = Translator(outputMock);
-    translator.translate(diagnosticsData);
+    var translator = Translator();
+    var actual = translator.translateToObject(diagnosticsData);
 
-    var expected = '' +
-      'Entry 0\n' +
-      'Pump: 0h 20m 23s\n' +
-      'Compressor: 2h 50m 19s\n' +
-      'Fan: 3h 0m 25s\n' +
-      'Motor: 3h 5m 34s\n' +
-      'IR Sender: 5h 2m 40s\n' +
-      'IR Receiver: 2h 54m 48s\n' +
-      'Upper Switch: 2h 56m 42s\n' +
-      'Lower Switch: 0h 57m 5s\n' +
-      'UV LED: 3h 0m 25s\n' +
-      'LED Light: 8h 3m 19s\n' +
-      'LED Ring: 8h 3m 22s\n' +
-      'LED Daytime: 8h 3m 19s\n' +
-      'Clean Switch: 2h 0m 35s\n' +
-      'Bucket Switch: 0h 11m 33s\n' +
-      '\n' +
-      'Entry 1\n' +
-      'Pump: 1h 9m 32s\n' +
-      'Compressor: 8h 46m 13s\n' +
-      'Fan: 9h 17m 24s\n' +
-      'Motor: 9h 45m 6s\n' +
-      'IR Sender: 13h 13m 40s\n' +
-      'IR Receiver: 8h 52m 10s\n' +
-      'Upper Switch: 15h 13m 58s\n' +
-      'Lower Switch: 1h 29m 8s\n' +
-      'UV LED: 10h 1m 11s\n' +
-      'LED Light: 23h 27m 31s\n' +
-      'LED Ring: 23h 27m 46s\n' +
-      'LED Daytime: 23h 27m 31s\n' +
-      'Clean Switch: 1h 18m 16s\n' +
-      'Bucket Switch: 0h 40m 50s\n' +
-      '\n' +
-      'Entry 2\n' +
-      'Pump: 0h 10m 15s\n' +
-      'Compressor: 0h 28m 52s\n' +
-      'Fan: 0h 37m 3s\n' +
-      'Motor: 0h 39m 9s\n' +
-      'IR Sender: 0h 37m 3s\n' +
-      'IR Receiver: 0h 36m 36s\n' +
-      'Upper Switch: 0h 31m 36s\n' +
-      'Lower Switch: 0h 0m 50s\n' +
-      'UV LED: 0h 37m 3s\n' +
-      'LED Light: 1h 46m 0s\n' +
-      'LED Ring: 1h 46m 0s\n' +
-      'LED Daytime: 1h 46m 0s\n' +
-      'Clean Switch: 0h 0m 0s\n' +
-      'Bucket Switch: 0h 0m 0s\n' +
-      '\n';
+    var expected = {
+      diagnostics: {
+        0: {
+          Pump: {
+            hours: 0,
+            minutes: 10,
+            seconds: 15
+          },
+          Compressor: {
+            hours: 0,
+            minutes: 28,
+            seconds: 52
+          },
+          Fan: {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          Motor: {
+            hours: 0,
+            minutes: 39,
+            seconds: 9
+          },
+          'IR Sender': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'IR Receiver': {
+            hours: 0,
+            minutes: 36,
+            seconds: 36
+          },
+          'Upper Switch': {
+            hours: 0,
+            minutes: 31,
+            seconds: 36
+          },
+          'Lower Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 50
+          },
+          'UV LED': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'LED Light': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Ring': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Daytime': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'Clean Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          },
+          'Bucket Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          }
+        },
+        1: {
+          Pump: {
+            hours: 0,
+            minutes: 10,
+            seconds: 15
+          },
+          Compressor: {
+            hours: 0,
+            minutes: 28,
+            seconds: 52
+          },
+          Fan: {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          Motor: {
+            hours: 0,
+            minutes: 39,
+            seconds: 9
+          },
+          'IR Sender': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'IR Receiver': {
+            hours: 0,
+            minutes: 36,
+            seconds: 36
+          },
+          'Upper Switch': {
+            hours: 0,
+            minutes: 31,
+            seconds: 36
+          },
+          'Lower Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 50
+          },
+          'UV LED': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'LED Light': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Ring': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Daytime': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'Clean Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          },
+          'Bucket Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          }
+        },
+        2: {
+          Pump: {
+            hours: 0,
+            minutes: 10,
+            seconds: 15
+          },
+          Compressor: {
+            hours: 0,
+            minutes: 28,
+            seconds: 52
+          },
+          Fan: {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          Motor: {
+            hours: 0,
+            minutes: 39,
+            seconds: 9
+          },
+          'IR Sender': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'IR Receiver': {
+            hours: 0,
+            minutes: 36,
+            seconds: 36
+          },
+          'Upper Switch': {
+            hours: 0,
+            minutes: 31,
+            seconds: 36
+          },
+          'Lower Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 50
+          },
+          'UV LED': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'LED Light': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Ring': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Daytime': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'Clean Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          },
+          'Bucket Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          }
+        }
+      }
+    };
 
-    expect(outputMock.print).toHaveBeenCalledWith(expected);
+    expect(actual).toEqual(expected);
   });
 
-  
+  it('should return an empty object if there is no diagnostics data', function() {
+    var diagnosticsData = {
+      diagnosticEntries: {}
+    };
 
-  xit('should not modify the original entry')
+    var translator = Translator();
+    var actual = translator.translateToObject(diagnosticsData);
+
+    expect(actual).toEqual({
+      diagnostics: {}
+    });
+  });
 });
