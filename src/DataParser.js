@@ -1,65 +1,55 @@
-module.exports = function(raw_data) {
-    var parsed_data = {
-      opal_diagnostics: {},
-      temperature_history: {}
+module.exports = function(rawData) {
+    const parsedData = {
+      diagnostics: {},
+      temperatureData: {}
     };
 
-    var diagnostic_data_format =
-      /[A-Z0-9]{2},([A-Z0-9]{2},)+/g;
-    var temperature_format =
+    //Regex
+    var opalLogFormat =
+      /([A-Z0-9]{2},){56}/g;
+    var temperatureDataFormat =
       /[A-Za-z]{3}\s\d{1,2},\s\d{4},\s\d{1,2}:\d{1,2}\s[A-Z]{2}:\d{1,2}/g;
+    var dateFormat =
+      /[A-Za-z]{3}\s\d{1,2},\s\d{4}/g;
+    var temperatureFormat =
+      /\d{1,2}$/;
+    var timeFormat =
+      /\d{1,2}:\d{1,2}\s[A-Z]{2}/g;
 
-  compileDiagnosticEntries = function(data) {
-    if(data.search(diagnostic_data_format) > -1)
+  compileDiagnostics = function(data) {
+    if(data.search(opalLogFormat) > -1)
     {
-      var diagnostic_entries = data.match(diagnostic_data_format);
+      var diagnosticsToAdd = data.match(opalLogFormat);
 
-      for(var log_index = 0; log_index < diagnostic_entries.length; log_index++)
+      for(var logIndex = 0; logIndex < diagnosticsToAdd.length; logIndex++)
       {
-        parsed_data.opal_diagnostics[log_index + 1] = diagnostic_entries[log_index];
+        parsedData.diagnostics[logIndex + 1] = diagnosticsToAdd[logIndex];
       }
     }
   };
 
-  compileTemperatureHistory = function (data) {
-    if(data.search(temperature_format) > -1)
+  compileTemperatureHistory = function(data) {
+    if(data.search(temperatureDataFormat) > -1)
     {
-      var temperature_entries = data.match(temperature_format);
+      var temperatureDataToAdd = data.match(temperatureDataFormat);
 
-      for(var history_index = 0; history_index < temperature_entries.length; history_index++)
+      for(var temperatureIndex = 0; temperatureIndex < temperatureDataToAdd.length; temperatureIndex++)
       {
-        parsed_data.temperature_history[history_index + 1] =  {
+        parsedData.temperatureData[temperatureIndex + 1] =  {
           recorded: {
-            date: temperature_entries[history_index].match(/[A-Za-z]{3}\s\d{1,2},\s\d{4}/g)[0],
-            time: temperature_entries[history_index].match(/\d{1,2}:\d{1,2}\s[A-Z]{2}/g)[0]
+            date: temperatureDataToAdd[temperatureIndex].match(dateFormat)[0],
+            time: temperatureDataToAdd[temperatureIndex].match(timeFormat)[0]
           },
-          temperature: parseInt(temperature_entries[history_index].match(/\d{1,2}$/)[0])
+          temperature: parseInt(temperatureDataToAdd[temperatureIndex].match(temperatureFormat)[0])
         };
       }
     }
   };
 
   this.parse = function() {
-    compileDiagnosticEntries(raw_data);
-    compileTemperatureHistory(raw_data);
+    compileDiagnostics(rawData);
+    compileTemperatureHistory(rawData);
 
-    return parsed_data;
+    return parsedData;
   };
 };
-// {
-//   diagnostic_entries = {
-//     [0] = "00,00, ...",
-//     ...
-//   },
-//   temperature_hisotry = {
-//     [0] = {
-//       date = {
-//         date = "11 Oct 1989",
-//         time = "7:22",
-//         deduced_seconds_elapsed = ##,
-//       },
-//       temperature = ##
-//     },
-//     ...
-//   }
-// }
