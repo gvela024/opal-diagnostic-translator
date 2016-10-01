@@ -17,12 +17,17 @@ var components = [
 
 module.exports = function(output) {
   return {
-    translate: function(diagnostics_data) {
+    translate: function(diagnosticsData) {
       var context = {
         result: '',
-        entry: diagnostics_data.diagnostic_entries[0]
+      };
+
+      for (diagnosticEntryIndex = 0; diagnosticEntryIndex < Object.keys(diagnosticsData.diagnosticEntries).length; diagnosticEntryIndex++) {
+        context.result += 'Entry ' + diagnosticEntryIndex + '\n';
+        context.entry = diagnosticsData.diagnosticEntries[diagnosticEntryIndex];
+        components.forEach(component, context);
+        context.result += '\n'
       }
-      components.forEach(component, context);
       output.print(context.result);
     }
   }
