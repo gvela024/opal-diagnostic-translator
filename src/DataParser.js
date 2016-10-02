@@ -1,6 +1,6 @@
 module.exports = function(rawData) {
   const parsedData = {
-    diagnostics: {},
+    rawDiagnostics: {},
     temperatureData: {}
   };
 
@@ -21,7 +21,7 @@ module.exports = function(rawData) {
       var diagnosticsToAdd = data.match(opalLogFormat);
 
       for (var logIndex = 0; logIndex < diagnosticsToAdd.length; logIndex++) {
-        parsedData.diagnostics[logIndex] = diagnosticsToAdd[logIndex];
+        parsedData.rawDiagnostics[logIndex] = diagnosticsToAdd[logIndex];
       }
     }
   };

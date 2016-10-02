@@ -5,7 +5,7 @@ describe('Data Parser', function() {
     var rawData = new DataParser("");
     var actual = rawData.parse();
     var expected = {
-      diagnostics: {},
+      rawDiagnostics: {},
       temperatureData: {}
     };
 
@@ -19,7 +19,7 @@ describe('Data Parser', function() {
         "00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,");
     var actual = rawData.parse();
     var expected = {
-      diagnostics: {
+      rawDiagnostics: {
         0: "00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,0" +
           "0,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00" +
           ",00,00,00,00,00,00,00,00,00,00,00,00,"
@@ -39,7 +39,7 @@ describe('Data Parser', function() {
       "0,00,00,00,00,00,");
     var actual = rawData.parse();
     var expected = {
-      diagnostics: {
+      rawDiagnostics: {
         0: "00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,0" +
           "0,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00" +
           ",00,00,00,00,00,00,00,00,00,00,00,00,",
@@ -57,7 +57,7 @@ describe('Data Parser', function() {
     var rawData = new DataParser("Sep 7, 2016, 4:11 PM:14,");
     var actual = rawData.parse();
     var expected = {
-      diagnostics: {},
+      rawDiagnostics: {},
       temperatureData: {
         0: {
           recorded: {
@@ -77,7 +77,7 @@ describe('Data Parser', function() {
       new DataParser("Sep 7, 2016, 4:12 PM:44,Sep 7, 2016, 4:13 PM:46,");
     var actual = rawData.parse();
     var expected = {
-      diagnostics: {},
+      rawDiagnostics: {},
       temperatureData: {
         0: {
           recorded: {
@@ -106,7 +106,7 @@ describe('Data Parser', function() {
         "5 PM:25,");
     var actual = rawData.parse();
     var expected = {
-      diagnostics: {},
+      rawDiagnostics: {},
       temperatureData: {
         0: {
           recorded: {
@@ -179,7 +179,7 @@ describe('Data Parser', function() {
         "M:48,");
     var actual = rawData.parse();
     var expected = {
-      diagnostics: {
+      rawDiagnostics: {
         0: "00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,0" +
           "0,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00,00" +
           ",00,00,00,00,00,00,00,00,00,00,00,00,",

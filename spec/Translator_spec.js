@@ -3,7 +3,7 @@ var Translator = require('../src/Translator')
 describe('Translator', function() {
   it('should convert one diagnostics data entry to JSON', function() {
     var diagnosticsData = {
-      diagnosticEntries: {
+      rawDiagnostics: {
         0: 'C7,04,00,00,EB,27,00,00,49,2A,00,00,7E,2B,00,00,F0,46,00,00,F8,28,00,00,6A,29,00,00,61,0D,00,00,49,2A,00,00,47,71,00,00,4A,71,00,00,47,71,00,00,43,1C,00,00,B5,02,00,00,'
       }
     };
@@ -93,7 +93,7 @@ describe('Translator', function() {
 
   it('should convert multiple diagnostics data entries to something human readable', function() {
     var diagnosticsData = {
-      diagnosticEntries: {
+      rawDiagnostics: {
         0: 'C7,04,00,00,EB,27,00,00,49,2A,00,00,7E,2B,00,00,F0,46,00,00,F8,28,00,00,6A,29,00,00,61,0D,00,00,49,2A,00,00,47,71,00,00,4A,71,00,00,47,71,00,00,43,1C,00,00,B5,02,00,00,',
         1: '4C,10,00,00,55,7B,00,00,A4,82,00,00,22,89,00,00,04,BA,00,00,BA,7C,00,00,36,D6,00,00,E4,14,00,00,E7,8C,00,00,E3,49,01,00,F2,49,01,00,E3,49,01,00,58,12,00,00,92,09,00,00,',
         2: '67,02,00,00,C4,06,00,00,AF,08,00,00,2D,09,00,00,AF,08,00,00,94,08,00,00,68,07,00,00,32,00,00,00,AF,08,00,00,D8,18,00,00,D8,18,00,00,D8,18,00,00,00,00,00,00,00,00,00,00,'
@@ -329,7 +329,7 @@ describe('Translator', function() {
 
   it('should return an empty object if there is no diagnostics data', function() {
     var diagnosticsData = {
-      diagnosticEntries: {}
+      rawDiagnostics: {}
     };
 
     var translator = Translator();
