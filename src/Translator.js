@@ -25,7 +25,7 @@ module.exports = function() {
         temporaryEntry: {}
       };
 
-      for (diagnosticEntryIndex = 0; diagnosticEntryIndex < Object.keys(diagnosticsData.diagnosticEntries).length; diagnosticEntryIndex++) {
+      for (var diagnosticEntryIndex = 0; diagnosticEntryIndex < Object.keys(diagnosticsData.diagnosticEntries).length; diagnosticEntryIndex++) {
         context.entry = diagnosticsData.diagnosticEntries[diagnosticEntryIndex];
         components.forEach(component, context);
         context.result.diagnostics[diagnosticEntryIndex] = context.temporaryEntry;
