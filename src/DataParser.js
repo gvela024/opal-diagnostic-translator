@@ -21,7 +21,7 @@ module.exports = function(rawData) {
       var diagnosticsToAdd = data.match(opalLogFormat);
 
       for (var logIndex = 0; logIndex < diagnosticsToAdd.length; logIndex++) {
-        parsedData.diagnostics[logIndex + 1] = diagnosticsToAdd[logIndex];
+        parsedData.diagnostics[logIndex] = diagnosticsToAdd[logIndex];
       }
     }
   };
@@ -31,7 +31,7 @@ module.exports = function(rawData) {
       var temperatureDataToAdd = data.match(temperatureDataFormat);
 
       for (var temperatureIndex = 0; temperatureIndex < temperatureDataToAdd.length; temperatureIndex++) {
-        parsedData.temperatureData[temperatureIndex + 1] = {
+        parsedData.temperatureData[temperatureIndex] = {
           recorded: {
             date: temperatureDataToAdd[temperatureIndex].match(dateFormat)[0],
             time: temperatureDataToAdd[temperatureIndex].match(timeFormat)[0]
