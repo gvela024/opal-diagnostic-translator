@@ -1,19 +1,4 @@
-var components = [
-  'Pump',
-  'Compressor',
-  'Fan',
-  'Motor',
-  'IR Sender',
-  'IR Receiver',
-  'Upper Switch',
-  'Lower Switch',
-  'UV LED',
-  'LED Light',
-  'LED Ring',
-  'LED Daytime',
-  'Clean Switch',
-  'Bucket Switch',
-]
+var components = require('diagnosticComponents');
 
 module.exports = function() {
   return {
