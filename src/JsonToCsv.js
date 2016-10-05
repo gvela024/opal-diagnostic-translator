@@ -1,11 +1,18 @@
 module.exports = function() {
   return {
-    parseJson = function (diagnosticsJson) {
+    parseJson: function(diagnosticsJson) {
       var csv = '';
-      for(var diagnostic in diagnosticsJson) {
-        console.log(diagnostic);
-        console.log(diagnosticsJson[diagnostic]);
+      var diagnostics = diagnosticsJson.diagnostics;
+      for (var diagnosticItem in diagnostics) {
+        csv += "Log Index " + diagnosticItem + ",\n";
+        csv += "Component,Hours,Minutes,Seconds,\n"
+        for (var component in diagnostics[diagnosticItem]) {
+          csv += component + "," + diagnostics[diagnosticItem][component].hours + "," + diagnostics[diagnosticItem][component].minutes + "," + diagnostics[diagnosticItem][component].seconds + ",\n";
+        }
+        csv += "\n\n";
       }
+      // console.log(csv);
+      return csv;
     }
   }
 }

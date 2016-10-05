@@ -81,8 +81,309 @@ describe('JSON to CSV translator', function() {
       }
     };
 
-    var expected = '';
+    var expected = "" +
+      "Log Index 0,\n" +
+      "Component,Hours,Minutes,Seconds,\n" +
+      "Pump,0,20,23,\n" +
+      "Compressor,2,50,19,\n" +
+      "Fan,3,0,25,\n" +
+      "Motor,3,5,34,\n" +
+      "IR Sender,5,2,40,\n" +
+      "IR Receiver,2,54,48,\n" +
+      "Upper Switch,2,56,42,\n" +
+      "Lower Switch,0,57,5,\n" +
+      "UV LED,3,0,25,\n" +
+      "LED Light,8,3,19,\n" +
+      "LED Ring,8,3,22,\n" +
+      "LED Daytime,8,3,19,\n" +
+      "Clean Switch,2,0,35,\n" +
+      "Bucket Switch,0,11,33,\n\n\n";
+
     var actual = jsonToCsv.parseJson(json);
     expect(actual).toEqual(expected);
+  });
+
+  it("should return the CSV for multiple diagnostic entries", function() {
+    var json = {
+      diagnostics: {
+        0: {
+          Pump: {
+            hours: 0,
+            minutes: 10,
+            seconds: 15
+          },
+          Compressor: {
+            hours: 0,
+            minutes: 28,
+            seconds: 52
+          },
+          Fan: {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          Motor: {
+            hours: 0,
+            minutes: 39,
+            seconds: 9
+          },
+          'IR Sender': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'IR Receiver': {
+            hours: 0,
+            minutes: 36,
+            seconds: 36
+          },
+          'Upper Switch': {
+            hours: 0,
+            minutes: 31,
+            seconds: 36
+          },
+          'Lower Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 50
+          },
+          'UV LED': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'LED Light': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Ring': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Daytime': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'Clean Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          },
+          'Bucket Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          }
+        },
+        1: {
+          Pump: {
+            hours: 0,
+            minutes: 10,
+            seconds: 15
+          },
+          Compressor: {
+            hours: 0,
+            minutes: 28,
+            seconds: 52
+          },
+          Fan: {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          Motor: {
+            hours: 0,
+            minutes: 39,
+            seconds: 9
+          },
+          'IR Sender': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'IR Receiver': {
+            hours: 0,
+            minutes: 36,
+            seconds: 36
+          },
+          'Upper Switch': {
+            hours: 0,
+            minutes: 31,
+            seconds: 36
+          },
+          'Lower Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 50
+          },
+          'UV LED': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'LED Light': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Ring': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Daytime': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'Clean Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          },
+          'Bucket Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          }
+        },
+        2: {
+          Pump: {
+            hours: 0,
+            minutes: 10,
+            seconds: 15
+          },
+          Compressor: {
+            hours: 0,
+            minutes: 28,
+            seconds: 52
+          },
+          Fan: {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          Motor: {
+            hours: 0,
+            minutes: 39,
+            seconds: 9
+          },
+          'IR Sender': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'IR Receiver': {
+            hours: 0,
+            minutes: 36,
+            seconds: 36
+          },
+          'Upper Switch': {
+            hours: 0,
+            minutes: 31,
+            seconds: 36
+          },
+          'Lower Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 50
+          },
+          'UV LED': {
+            hours: 0,
+            minutes: 37,
+            seconds: 3
+          },
+          'LED Light': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Ring': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'LED Daytime': {
+            hours: 1,
+            minutes: 46,
+            seconds: 0
+          },
+          'Clean Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          },
+          'Bucket Switch': {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+          }
+        }
+      }
+    };
+
+    var expected = "" +
+      "Log Index 0,\n" +
+      "Component,Hours,Minutes,Seconds,\n" +
+      "Pump,0,10,15,\n" +
+      "Compressor,0,28,52,\n" +
+      "Fan,0,37,3,\n" +
+      "Motor,0,39,9,\n" +
+      "IR Sender,0,37,3,\n" +
+      "IR Receiver,0,36,36,\n" +
+      "Upper Switch,0,31,36,\n" +
+      "Lower Switch,0,0,50,\n" +
+      "UV LED,0,37,3,\n" +
+      "LED Light,1,46,0,\n" +
+      "LED Ring,1,46,0,\n" +
+      "LED Daytime,1,46,0,\n" +
+      "Clean Switch,0,0,0,\n" +
+      "Bucket Switch,0,0,0,\n" +
+      "\n" +
+      "\n" +
+      "Log Index 1,\n" +
+      "Component,Hours,Minutes,Seconds,\n" +
+      "Pump,0,10,15,\n" +
+      "Compressor,0,28,52,\n" +
+      "Fan,0,37,3,\n" +
+      "Motor,0,39,9,\n" +
+      "IR Sender,0,37,3,\n" +
+      "IR Receiver,0,36,36,\n" +
+      "Upper Switch,0,31,36,\n" +
+      "Lower Switch,0,0,50,\n" +
+      "UV LED,0,37,3,\n" +
+      "LED Light,1,46,0,\n" +
+      "LED Ring,1,46,0,\n" +
+      "LED Daytime,1,46,0,\n" +
+      "Clean Switch,0,0,0,\n" +
+      "Bucket Switch,0,0,0,\n" +
+      "\n" +
+      "\n" +
+      "Log Index 2,\n" +
+      "Component,Hours,Minutes,Seconds,\n" +
+      "Pump,0,10,15,\n" +
+      "Compressor,0,28,52,\n" +
+      "Fan,0,37,3,\n" +
+      "Motor,0,39,9,\n" +
+      "IR Sender,0,37,3,\n" +
+      "IR Receiver,0,36,36,\n" +
+      "Upper Switch,0,31,36,\n" +
+      "Lower Switch,0,0,50,\n" +
+      "UV LED,0,37,3,\n" +
+      "LED Light,1,46,0,\n" +
+      "LED Ring,1,46,0,\n" +
+      "LED Daytime,1,46,0,\n" +
+      "Clean Switch,0,0,0,\n" +
+      "Bucket Switch,0,0,0,\n\n\n";
+
+    var actual = jsonToCsv.parseJson(json);
+    expect(actual).toEqual(expected);
+  });
+
+  xit("should print temperature data in some pretty format", function() {
+    // todo
   });
 });
