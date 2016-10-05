@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gvela024/opal-diagnostic-translator.svg?branch=master)](https://travis-ci.org/gvela024/opal-diagnostic-translator)
+
 # opal-diagnostics-translator
 This application will turn the raw Opal Diagnostics Data into a JSON object.
 
