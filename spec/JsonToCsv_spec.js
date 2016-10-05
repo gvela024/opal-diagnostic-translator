@@ -383,7 +383,53 @@ describe('JSON to CSV translator', function() {
     expect(actual).toEqual(expected);
   });
 
-  xit("should print temperature data in some pretty format", function() {
-    // todo
+  it("should print temperature data in some pretty format", function() {
+    var json = {
+      temperatureData: {
+        0: {
+          recorded: {
+            date: "Sep 7, 2016",
+            time: "4:11 PM",
+          },
+          temperature: 14
+        }
+      }
+    };
+
+    var expected = '' +
+      "Temperature Data,\n" +
+      "Date,Time,Temperature (F),\n" +
+      "Sep 7, 2016,4:11 PM,14,\n";
+    var actual = jsonToCsv.parseJson(json);
+    expect(actual).toEqual(expected);
+  });
+
+  it("should print more than one temperature in CSV format", function() {
+    var json = {
+      temperatureData: {
+        0: {
+          recorded: {
+            date: "Sep 7, 2016",
+            time: "4:12 PM",
+          },
+          temperature: 44
+        },
+        1: {
+          recorded: {
+            date: "Sep 7, 2016",
+            time: "4:13 PM",
+          },
+          temperature: 46
+        }
+      }
+    };
+
+    var expected = '' +
+      "Temperature Data,\n" +
+      "Date,Time,Temperature (F),\n" +
+      "Sep 7, 2016,4:12 PM,44,\n" +
+      "Sep 7, 2016,4:13 PM,46,\n";
+    var actual = jsonToCsv.parseJson(json);
+    expect(actual).toEqual(expected);
   });
 });
