@@ -16,7 +16,7 @@ module.exports = function() {
 
       var temperatureDatum = diagnosticsJson.temperatureData;
       if (temperatureDatum !== undefined) {
-        csv += "Temperature Data,\nDate,Time,Temperature (F),\n"
+        csv += "Temperature Data,\nDate,Year,Time,Temperature (F),\n"
         for (var temperatureData in temperatureDatum) {
           csv += temperatureDatum[temperatureData].recorded.date + "," + temperatureDatum[temperatureData].recorded.time + "," + temperatureDatum[temperatureData].temperature + ",\n";
         }

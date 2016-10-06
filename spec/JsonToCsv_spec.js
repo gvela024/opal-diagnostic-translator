@@ -398,7 +398,7 @@ describe('JSON to CSV translator', function() {
 
     var expected = '' +
       "Temperature Data,\n" +
-      "Date,Time,Temperature (F),\n" +
+      "Date,Year,Time,Temperature (F),\n" +
       "Sep 7, 2016,4:11 PM,14,\n";
     var actual = jsonToCsv.parseJson(json);
     expect(actual).toEqual(expected);
@@ -426,7 +426,7 @@ describe('JSON to CSV translator', function() {
 
     var expected = '' +
       "Temperature Data,\n" +
-      "Date,Time,Temperature (F),\n" +
+      "Date,Year,Time,Temperature (F),\n" +
       "Sep 7, 2016,4:12 PM,44,\n" +
       "Sep 7, 2016,4:13 PM,46,\n";
     var actual = jsonToCsv.parseJson(json);

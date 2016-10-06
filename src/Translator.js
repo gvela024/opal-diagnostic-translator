@@ -18,33 +18,24 @@ var components = [
 module.exports = function() {
   return {
     translateToObject: function(diagnosticsData) {
-      var context = {
-        result: {
-          diagnostics: {}
-        },
-        temporaryEntry: {}
-      };
+      var diagnostics = {}
 
-      for (var diagnosticEntryIndex = 0; diagnosticEntryIndex < Object.keys(diagnosticsData.rawDiagnostics).length; diagnosticEntryIndex++) {
-        context.entry = diagnosticsData.rawDiagnostics[diagnosticEntryIndex];
-        components.forEach(component, context);
-        context.result.diagnostics[diagnosticEntryIndex] = context.temporaryEntry;
+      for (var rawDataIndex in Object.keys(diagnosticsData.rawDiagnostics)) {
+        diagnostics[rawDataIndex] = {}
+        var rawData = diagnosticsData.rawDiagnostics[rawDataIndex];
+        for (var componentIndex in components) {
+          var componentRawData = rawData.slice(parseInt(componentIndex) * 12, (parseInt(componentIndex) + 1) * 12);
+          var seconds = convertFromLittleEndianStringToSeconds(componentRawData);
+          diagnostics[rawDataIndex][components[componentIndex]] = {}
+          diagnostics[rawDataIndex][components[componentIndex]].hours = getHours(seconds);
+          diagnostics[rawDataIndex][components[componentIndex]].minutes = getMinutes(seconds);
+          diagnostics[rawDataIndex][components[componentIndex]].seconds = getSeconds(seconds);
+        }
       }
 
-      return context.result;
+      return diagnostics;
     }
   }
-}
-
-function component(element, index, array) {
-  var resultingData = ''
-
-  var diagnosticEntry = this.entry.slice(index * 12, (index + 1) * 12);
-  var seconds = convertFromLittleEndianStringToSeconds(diagnosticEntry);
-  this.temporaryEntry[element] = {}
-  this.temporaryEntry[element].hours = getHours(seconds);
-  this.temporaryEntry[element].minutes = getMinutes(seconds);
-  this.temporaryEntry[element].seconds = getSeconds(seconds);
 }
 
 function convertFromLittleEndianStringToSeconds(dataString) {
